@@ -19,9 +19,6 @@ namespace LolStats
         // Champion id - number of times played
         public Dictionary<int, int> ChampionMap;
 
-        //float AvgCS;
-        //float AvgGold;
-
         public Role()
         {
             RoleName = "";

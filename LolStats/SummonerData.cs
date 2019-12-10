@@ -11,7 +11,8 @@ namespace LolStats
     public class SummonerData
     {
         public string Name;
-        public long Level;
+        //public long AverageCS;
+        //public long AverageGold;
 
         [JsonIgnore]
         public string AccountId;
@@ -21,7 +22,9 @@ namespace LolStats
         public SummonerData()
         {
             Name = "";
-            Level = 0;
+            //AverageCS = 0;
+            //AverageGold = 0;
+
             Roles = new List<Role>();
 
             Role Top = new Role();

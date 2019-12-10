@@ -41,13 +41,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.averageGoldBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.averageCSBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.commonRoleBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.commonLaneBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.topChampsBox = new System.Windows.Forms.GroupBox();
             this.topChamp2 = new System.Windows.Forms.TextBox();
@@ -208,7 +208,7 @@
             this.regionBox.FormattingEnabled = true;
             this.regionBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.regionBox.Items.AddRange(new object[] {
-            "NA",
+            "NA1",
             "BR",
             "EUNE",
             "EUW",
@@ -221,7 +221,7 @@
             this.regionBox.Name = "regionBox";
             this.regionBox.Size = new System.Drawing.Size(121, 21);
             this.regionBox.TabIndex = 5;
-            this.regionBox.Text = "NA";
+            this.regionBox.Text = "NA1";
             this.regionBox.SelectedIndexChanged += new System.EventHandler(this.regionBox_SelectedIndexChanged);
             // 
             // label3
@@ -247,13 +247,13 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox14);
+            this.groupBox5.Controls.Add(this.averageGoldBox);
             this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.textBox13);
+            this.groupBox5.Controls.Add(this.averageCSBox);
             this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.textBox12);
+            this.groupBox5.Controls.Add(this.commonRoleBox);
             this.groupBox5.Controls.Add(this.label10);
-            this.groupBox5.Controls.Add(this.textBox11);
+            this.groupBox5.Controls.Add(this.commonLaneBox);
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Location = new System.Drawing.Point(438, 18);
             this.groupBox5.Name = "groupBox5";
@@ -262,13 +262,13 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Popular Data";
             // 
-            // textBox14
+            // averageGoldBox
             // 
-            this.textBox14.Location = new System.Drawing.Point(9, 250);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.ReadOnly = true;
-            this.textBox14.Size = new System.Drawing.Size(145, 20);
-            this.textBox14.TabIndex = 23;
+            this.averageGoldBox.Location = new System.Drawing.Point(9, 250);
+            this.averageGoldBox.Name = "averageGoldBox";
+            this.averageGoldBox.ReadOnly = true;
+            this.averageGoldBox.Size = new System.Drawing.Size(145, 20);
+            this.averageGoldBox.TabIndex = 23;
             // 
             // label12
             // 
@@ -279,13 +279,13 @@
             this.label12.TabIndex = 22;
             this.label12.Text = "Average Ending Gold";
             // 
-            // textBox13
+            // averageCSBox
             // 
-            this.textBox13.Location = new System.Drawing.Point(9, 173);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.ReadOnly = true;
-            this.textBox13.Size = new System.Drawing.Size(145, 20);
-            this.textBox13.TabIndex = 21;
+            this.averageCSBox.Location = new System.Drawing.Point(9, 173);
+            this.averageCSBox.Name = "averageCSBox";
+            this.averageCSBox.ReadOnly = true;
+            this.averageCSBox.Size = new System.Drawing.Size(145, 20);
+            this.averageCSBox.TabIndex = 21;
             // 
             // label11
             // 
@@ -296,13 +296,13 @@
             this.label11.TabIndex = 20;
             this.label11.Text = "Average CS";
             // 
-            // textBox12
+            // commonRoleBox
             // 
-            this.textBox12.Location = new System.Drawing.Point(9, 104);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.ReadOnly = true;
-            this.textBox12.Size = new System.Drawing.Size(145, 20);
-            this.textBox12.TabIndex = 19;
+            this.commonRoleBox.Location = new System.Drawing.Point(9, 104);
+            this.commonRoleBox.Name = "commonRoleBox";
+            this.commonRoleBox.ReadOnly = true;
+            this.commonRoleBox.Size = new System.Drawing.Size(145, 20);
+            this.commonRoleBox.TabIndex = 19;
             // 
             // label10
             // 
@@ -313,13 +313,13 @@
             this.label10.TabIndex = 18;
             this.label10.Text = "Most common Role";
             // 
-            // textBox11
+            // commonLaneBox
             // 
-            this.textBox11.Location = new System.Drawing.Point(9, 33);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.ReadOnly = true;
-            this.textBox11.Size = new System.Drawing.Size(145, 20);
-            this.textBox11.TabIndex = 17;
+            this.commonLaneBox.Location = new System.Drawing.Point(9, 33);
+            this.commonLaneBox.Name = "commonLaneBox";
+            this.commonLaneBox.ReadOnly = true;
+            this.commonLaneBox.Size = new System.Drawing.Size(145, 20);
+            this.commonLaneBox.TabIndex = 17;
             // 
             // label9
             // 
@@ -499,7 +499,6 @@
             // 
             // searchButton
             // 
-            this.searchButton.Enabled = false;
             this.searchButton.Location = new System.Drawing.Point(19, 334);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(132, 32);
@@ -637,13 +636,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox averageGoldBox;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox averageCSBox;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox commonRoleBox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox commonLaneBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox topChampsBox;
         private System.Windows.Forms.TextBox topChamp2;

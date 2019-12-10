@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MingweiSamuel.Camille;
 using MingweiSamuel.Camille.SummonerV4;
 using MingweiSamuel.Camille.MatchV4;
+using MingweiSamuel.Camille.LeagueV4;
 using MingweiSamuel.Camille.Enums;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -112,14 +113,49 @@ namespace LolStats
         {
             if (StatsByLeague)
             {
+                GetLeagueByDivisionSync(regionBox, divisionBox, leagueBox, top10Summoners);
 
+                Role Top = new Role();
+                Role Jungle = new Role();
+                Role Mid = new Role();
+                Role Support = new Role();
+                Role ADC = new Role();
+
+                foreach (SummonerData current in DataList)
+                {
+                    CalculateTopChampsSync(top10Summoners, current, Top, Jungle, Mid, Support, ADC);
+                }
+
+                PopulateTopChampsSync(Top, Jungle, Mid, Support, ADC);
+
+                SummonerData Collective = new SummonerData();
+                Collective.Roles.Clear();
+                Collective.Roles.Add(Top);
+                Collective.Roles.Add(Jungle);
+                Collective.Roles.Add(Mid);
+                Collective.Roles.Add(Support);
+                Collective.Roles.Add(ADC);
+                Collective.Name = "Collective";
+
+                PopulatePopularDataSync(Collective);
             }
             else
             {
-                GetSummonerSync(regionBox, summonerNameBox.Text);
-                foreach(SummonerData s in DataList)
+                if (CheckResponse(regionBox, summonerNameBox.Text, Riot, ApiKey))
                 {
-                    GetRoleInfoSync(top10Summoners, regionBox, s);
+                    GetSummonerSync(regionBox, summonerNameBox.Text);
+
+                    GetRoleInfoSync(regionBox, DataList[0]);
+
+                    CalculateTopChampsSync(top10Summoners, DataList[0]);
+
+                    PopulatePopularDataSync(DataList[0]);
+                }
+                else
+                {
+                    // Invalid response from server
+                    progressBarStatusLabel1.BackColor = Color.FromName("Crimson");
+                    progressBarStatusLabel1.Text = "No Response";
                 }
             }
 
@@ -127,9 +163,8 @@ namespace LolStats
 
         #endregion
 
-        #region Private Methods
-
-        public static bool CheckResponse(ComboBox region, string name, RiotApi riot)
+        // Checks that summoner name is valid by checking for a response from the server
+        public static bool CheckResponse(ComboBox region, string name, RiotApi riot, string ApiKey)
         {
             bool gotResponse = false;
 
@@ -138,7 +173,21 @@ namespace LolStats
                 BaseAddress = SummonerByNameBaseAddress
             };
 
-            
+            var uriBuilder = new UriBuilder($"https://{region.Text.ToString()}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}");
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["api_key"] = ApiKey;
+            uriBuilder.Query = query.ToString();
+            string requestUri = uriBuilder.ToString();
+
+            var response = client.GetAsync(requestUri).Result;
+            if (response.IsSuccessStatusCode == false)
+            {
+                gotResponse = false;
+            }
+            else
+            {
+                gotResponse = true;
+            }
 
             return gotResponse;
         }
@@ -157,6 +206,36 @@ namespace LolStats
             return false;
         }
 
+        private static void FindTopChamps(Role input)
+        {
+            int topChamp = 0;
+            int topChampCount = 0;
+            int secondChamp = 0;
+            int secondChampCount = 0;
+
+            foreach (int i in input.ChampionMap.Keys)
+            {
+                if (input.ChampionMap[i] >= secondChampCount)
+                {
+                    secondChamp = i;
+                    secondChampCount = input.ChampionMap[i];
+                }
+                if (input.ChampionMap[i] >= topChampCount)
+                {
+                    secondChamp = topChamp;
+                    secondChampCount = topChampCount;
+                    topChamp = i;
+                    topChampCount = input.ChampionMap[i];
+
+                }
+            }
+
+            input.TopChamp = topChamp;
+            input.SecondChamp = secondChamp;
+
+            //return input;
+        }
+
         //private static async Task GetSummonerAsync(ComboBox region, string summonerName)
         //{
         //    await Riot.SummonerV4.GetBySummonerName(Utility.GetRegion(region.Text), summonerName);
@@ -171,24 +250,18 @@ namespace LolStats
 
             SummonerData currentData = new SummonerData();
             currentData.Name = summoner.Name;
-            currentData.Level = summoner.SummonerLevel;
             currentData.AccountId = summoner.AccountId;
 
             DataList.Add(currentData);
         }
 
-        private static void GetRoleInfoSync(ListBox list, ComboBox region, SummonerData current)
+        private static void GetRoleInfoSync(ComboBox region, SummonerData current)
         {
             Matchlist matchlist;
             matchlist = Riot.MatchV4.GetMatchlist(Utility.GetRegion(region.Text), current.AccountId);
-
-            int i = 0;
             
             foreach (MatchReference m in matchlist.Matches)
             {
-                list.Items.Add(i);
-                i++;
-
                 switch (m.Lane)
                 {
                     case "TOP":
@@ -291,44 +364,142 @@ namespace LolStats
             }
         }
 
-        private void CalculateTopChamps(ListBox listBox, SummonerData current)
+        private void CalculateTopChampsSync(ListBox listBox, SummonerData current)
         {
             listBox.Items.Add(current.Name);
 
             foreach (Role r in current.Roles)
             {
                 FindTopChamps(r);
-                PopulateTopChamps(r);
+                PopulateTopChampsSync(r);
             }
         }
 
-        private void PopulateTopChamps(Role r)
+        private void CalculateTopChampsSync(ListBox listBox, SummonerData current, Role Top, Role Jungle, Role Mid, Role Support, Role ADC)
+        {
+            listBox.Items.Add(current.Name);
+
+            foreach (Role r in current.Roles)
+            {
+                switch (r.RoleName)
+                {
+                    case "Top":
+                        CombineRoles(r, Top);
+
+                        break;
+
+                    case "Jungle":
+                        CombineRoles(r, Jungle);
+                        break;
+
+                    case "Mid":
+                        CombineRoles(r, Mid);
+                        break;
+
+                    case "Support":
+                        CombineRoles(r, Support);
+                        break;
+
+                    case "ADC":
+                        CombineRoles(r, ADC);
+                        break;
+
+                    default:
+
+                        break;
+                }
+            }
+
+            FindTopChamps(Top);
+            PopulateTopChampsSync(Top);
+
+            FindTopChamps(Jungle);
+            PopulateTopChampsSync(Jungle);
+
+            FindTopChamps(Mid);
+            PopulateTopChampsSync(Mid);
+
+            FindTopChamps(Support);
+            PopulateTopChampsSync(Support);
+
+            FindTopChamps(ADC);
+            PopulateTopChampsSync(ADC);
+        }
+
+        private void CombineRoles(Role current, Role group)
+        {
+            group.MatchCount += current.MatchCount;
+
+            foreach (int i in current.ChampionMap.Keys)
+            {
+                if (group.ChampionMap.ContainsKey(i))
+                {
+                    group.ChampionMap[i] += current.ChampionMap[i];
+                }
+                else
+                {
+                    group.ChampionMap.Add(i, current.ChampionMap[i]);
+                }
+            }
+        }
+
+        private void PopulateTopChampsSync(Role r)
         {
             switch (r.RoleName)
             {
                 case "Top":
-                    topChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
-                    topChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    if (r.TopChamp != 0)
+                    {
+                        topChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
+                    }
+                    if (r.SecondChamp != 0)
+                    {
+                        topChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    }
                     break;
 
                 case "Jungle":
-                    jungleChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
-                    jungleChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    if (r.TopChamp != 0)
+                    {
+                        jungleChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
+                    }
+                    if (r.SecondChamp != 0)
+                    {
+                        jungleChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    }
                     break;
 
                 case "Mid":
-                    midChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
-                    midChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    if (r.TopChamp != 0)
+                    {
+                        midChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
+                    }
+                    if (r.SecondChamp != 0)
+                    {
+                        midChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    }
                     break;
 
                 case "Support":
-                    supportChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
-                    supportChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    if (r.TopChamp != 0)
+                    {
+                        supportChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
+                    }
+                    if (r.SecondChamp != 0)
+                    {
+                        supportChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    }
                     break;
 
                 case "ADC":
-                    carryChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
-                    carryChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    if (r.TopChamp != 0)
+                    {
+                        carryChamp1.Text = r.TopChamp.ToString() + ", " + r.ChampionMap[r.TopChamp].ToString();
+                    }
+                    if (r.SecondChamp != 0)
+                    {
+                        carryChamp2.Text = r.SecondChamp.ToString() + ", " + r.ChampionMap[r.SecondChamp].ToString();
+                    }
                     break;
 
                 default:
@@ -337,37 +508,117 @@ namespace LolStats
             }
         }
 
-        private static void FindTopChamps(Role input)
-        {
-            int topChamp = 0;
-            int secondChamp = -1;
-
-            foreach (int i in input.ChampionMap.Keys)
+        private void PopulateTopChampsSync(Role Top, Role Jungle, Role Mid, Role Support, Role ADC)
+        {   
+            if (Top.TopChamp != 0)
             {
-                if(input.ChampionMap[i] > secondChamp)
+                topChamp1.Text = Top.TopChamp.ToString() + ", " + Top.ChampionMap[Top.TopChamp].ToString();
+            }
+            if (Top.SecondChamp != 0)
+            {
+                topChamp2.Text = Top.SecondChamp.ToString() + ", " + Top.ChampionMap[Top.SecondChamp].ToString();
+            }
+ 
+            if (Jungle.TopChamp != 0)
+            {
+                jungleChamp1.Text = Jungle.TopChamp.ToString() + ", " + Jungle.ChampionMap[Jungle.TopChamp].ToString();
+            }
+            if (Jungle.SecondChamp != 0)
+            {
+                jungleChamp2.Text = Jungle.SecondChamp.ToString() + ", " + Jungle.ChampionMap[Jungle.SecondChamp].ToString();
+            }
+
+            if (Mid.TopChamp != 0)
+            {
+                midChamp1.Text = Mid.TopChamp.ToString() + ", " + Mid.ChampionMap[Mid.TopChamp].ToString();
+            }
+            if (Mid.SecondChamp != 0)
+            {
+                midChamp2.Text = Mid.SecondChamp.ToString() + ", " + Mid.ChampionMap[Mid.SecondChamp].ToString();
+            }
+
+            if (Support.TopChamp != 0)
+            {
+                supportChamp1.Text = Support.TopChamp.ToString() + ", " + Support.ChampionMap[Support.TopChamp].ToString();
+            }
+            if (Support.SecondChamp != 0)
+            {
+                supportChamp2.Text = Support.SecondChamp.ToString() + ", " + Support.ChampionMap[Support.SecondChamp].ToString();
+            }
+
+            if (ADC.TopChamp != 0)
+            {
+                carryChamp1.Text = ADC.TopChamp.ToString() + ", " + ADC.ChampionMap[ADC.TopChamp].ToString();
+            }
+            if (ADC.SecondChamp != 0)
+            {
+                carryChamp2.Text = ADC.SecondChamp.ToString() + ", " + ADC.ChampionMap[ADC.SecondChamp].ToString();
+            }
+        }
+
+        private void PopulatePopularDataSync(SummonerData data)
+        {
+            Role mostPlayed = new Role();
+
+            foreach (Role r in data.Roles)
+            {
+                if (r.MatchCount > mostPlayed.MatchCount)
                 {
-                    secondChamp = i;
-                }
-                if (input.ChampionMap[i] > topChamp)
-                {
-                    secondChamp = topChamp;
-                    topChamp = i;
+                    mostPlayed = r;
                 }
             }
 
-            input.TopChamp = topChamp;
-            input.SecondChamp = secondChamp;
+            commonRoleBox.Text = mostPlayed.RoleName;
 
-            //return input;
+            switch (mostPlayed.RoleName)
+            {
+                case "Top":
+                    commonLaneBox.Text = "Top";
+                    break;
+
+                case "Jungle":
+                    commonLaneBox.Text = "Jungle";
+                    break;
+
+                case "Mid":
+                    commonLaneBox.Text = "Mid";
+                    break;
+
+                case "Support":
+                    commonLaneBox.Text = "Bottom";
+                    break;
+
+                case "ADC":
+                    commonLaneBox.Text = "Bottom";
+                    break;
+
+                default:
+
+                    break;
+            }
+
         }
 
-        #endregion
+        private static void GetLeagueByDivisionSync(ComboBox region, ComboBox division, ComboBox league, ListBox list)
+        {
+            var leagueEntries = Riot.LeagueExpV4.GetLeagueEntries(Utility.GetRegion(region.Text), Utility.GetDivision(division.Text).ToString(), Utility.GetTier(league.Text), Queue.RANKED_SOLO_5x5);
 
-        //public Summoner GetSummonerAsync()
-        //{
-        //    Summoner summoner;
-        //    summoner = Riot.SummonerV4.GetBySummonerName(Utility.GetRegion(summonerNameBox.Text), summonerNameBox.Text);
-        //    return summoner;
-        //}
+            for (int i = 0; i < 10; i++)
+            {
+                SummonerData current = new SummonerData();
+                Summoner summoner = new Summoner();
+
+                summoner = Riot.SummonerV4.GetBySummonerName(Utility.GetRegion(region.Text), leagueEntries[i].SummonerName);
+
+                current.Name = leagueEntries[i].SummonerName;
+                current.AccountId = summoner.AccountId;
+
+                GetRoleInfoSync(region, current);
+
+                DataList.Add(current);
+            }
+
+
+        }
     }
 }

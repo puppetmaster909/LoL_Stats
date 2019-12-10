@@ -15,7 +15,7 @@ namespace LolStats
         {
             switch (inputRegion)
             {
-                case "NA":
+                case "NA1":
                     return MingweiSamuel.Camille.Enums.Region.NA;
 
                 case "BR":
@@ -44,6 +44,53 @@ namespace LolStats
 
                 default:
                     return MingweiSamuel.Camille.Enums.Region.NA;
+            }
+        }
+
+        public static string GetTier(string inputTier)
+        {
+            switch (inputTier)
+            {
+                case "Challenger":
+                    return "CHALLENGER";
+
+                case "GrandMaster":
+                    return "GRANDMASTER";
+                case "Master":
+                    return "MASTER";
+                case "Diamond":
+                    return "DIAMOND";
+                case "Platinum":
+                    return "PLATINUM";
+                case "Gold":
+                    return "GOLD";
+                case "Silver":
+                    return "SILVER";
+                case "Bronze":
+                    return "BRONZE";
+                case "Iron":
+                    return "IRON";
+                default:
+                    return "CHALLENGER";
+            }
+        }
+
+        public static MingweiSamuel.Camille.Enums.Division GetDivision(string inputDivision)
+        {
+            switch (inputDivision)
+            {
+                case "I":
+                    return Division.I;
+                case "II":
+                    return Division.II;
+                case "III":
+                    return Division.III;
+                case "IV":
+                    return Division.IV;
+                case "V":
+                    return Division.V;
+                default:
+                    return Division.I;
             }
         }
 
