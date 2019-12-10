@@ -1,6 +1,6 @@
 ﻿namespace LolStats
 {
-    partial class Form1
+    partial class LoLStatsMain
     {
         /// <summary>
         /// Required designer variable.
@@ -30,10 +30,14 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.leagueBox = new System.Windows.Forms.ComboBox();
+            this.divisionBox = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.summonerNameBox = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.statsBySummonerButton = new System.Windows.Forms.RadioButton();
+            this.statsByLeagueButton = new System.Windows.Forms.RadioButton();
+            this.regionBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -45,70 +49,68 @@
             this.label10 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.topChampsBox = new System.Windows.Forms.GroupBox();
+            this.topChamp2 = new System.Windows.Forms.TextBox();
+            this.jungleChamp2 = new System.Windows.Forms.TextBox();
+            this.midChamp2 = new System.Windows.Forms.TextBox();
+            this.supportChamp2 = new System.Windows.Forms.TextBox();
+            this.carryChamp2 = new System.Windows.Forms.TextBox();
+            this.carryChamp1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.supportChamp1 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.midChamp1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.jungleChamp1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.topChamp1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Top10Summoners = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.top10Summoners = new System.Windows.Forms.ListBox();
+            this.searchButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox15 = new System.Windows.Forms.TextBox();
             this.aPIKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enterKeyHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.progressBarStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.topChampsBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 132);
+            this.label1.Location = new System.Drawing.Point(3, 86);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "League";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 185);
+            this.label2.Location = new System.Drawing.Point(3, 139);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Division";
             // 
-            // comboBox1
+            // leagueBox
             // 
-            this.comboBox1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.leagueBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.leagueBox.FormattingEnabled = true;
+            this.leagueBox.Items.AddRange(new object[] {
             "Challenger",
             "GrandMaster",
             "Master",
@@ -118,35 +120,37 @@
             "Silver",
             "Bronze",
             "Iron"});
-            this.comboBox1.Location = new System.Drawing.Point(6, 148);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 2;
+            this.leagueBox.Location = new System.Drawing.Point(6, 102);
+            this.leagueBox.Name = "leagueBox";
+            this.leagueBox.Size = new System.Drawing.Size(121, 21);
+            this.leagueBox.TabIndex = 2;
+            this.leagueBox.Text = "Challenger";
             // 
-            // comboBox2
+            // divisionBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.divisionBox.FormattingEnabled = true;
+            this.divisionBox.Items.AddRange(new object[] {
             "I",
             "II",
             "III",
             "IV",
             "V"});
-            this.comboBox2.Location = new System.Drawing.Point(6, 201);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 3;
+            this.divisionBox.Location = new System.Drawing.Point(6, 155);
+            this.divisionBox.Name = "divisionBox";
+            this.divisionBox.Size = new System.Drawing.Size(121, 21);
+            this.divisionBox.TabIndex = 3;
+            this.divisionBox.Text = "I";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox15);
+            this.groupBox1.Controls.Add(this.summonerNameBox);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.statsBySummonerButton);
+            this.groupBox1.Controls.Add(this.statsByLeagueButton);
+            this.groupBox1.Controls.Add(this.regionBox);
+            this.groupBox1.Controls.Add(this.leagueBox);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.divisionBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(13, 25);
@@ -156,31 +160,74 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input";
             // 
-            // comboBox3
+            // summonerNameBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.summonerNameBox.Enabled = false;
+            this.summonerNameBox.Location = new System.Drawing.Point(6, 258);
+            this.summonerNameBox.Name = "summonerNameBox";
+            this.summonerNameBox.Size = new System.Drawing.Size(121, 20);
+            this.summonerNameBox.TabIndex = 9;
+            this.summonerNameBox.Text = "Puppetmaster909";
+            this.summonerNameBox.TextChanged += new System.EventHandler(this.summonerNameBox_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 241);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(88, 13);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "Summoner Name";
+            // 
+            // statsBySummonerButton
+            // 
+            this.statsBySummonerButton.AutoSize = true;
+            this.statsBySummonerButton.Location = new System.Drawing.Point(6, 58);
+            this.statsBySummonerButton.Name = "statsBySummonerButton";
+            this.statsBySummonerButton.Size = new System.Drawing.Size(116, 17);
+            this.statsBySummonerButton.TabIndex = 7;
+            this.statsBySummonerButton.Text = "Stats by Summoner";
+            this.statsBySummonerButton.UseVisualStyleBackColor = true;
+            this.statsBySummonerButton.CheckedChanged += new System.EventHandler(this.statsBySummonerButton_CheckedChanged);
+            // 
+            // statsByLeagueButton
+            // 
+            this.statsByLeagueButton.AutoSize = true;
+            this.statsByLeagueButton.Checked = true;
+            this.statsByLeagueButton.Location = new System.Drawing.Point(6, 30);
+            this.statsByLeagueButton.Name = "statsByLeagueButton";
+            this.statsByLeagueButton.Size = new System.Drawing.Size(102, 17);
+            this.statsByLeagueButton.TabIndex = 6;
+            this.statsByLeagueButton.TabStop = true;
+            this.statsByLeagueButton.Text = "Stats by League";
+            this.statsByLeagueButton.UseVisualStyleBackColor = true;
+            this.statsByLeagueButton.CheckedChanged += new System.EventHandler(this.statsByLeagueButton_CheckedChanged);
+            // 
+            // regionBox
+            // 
+            this.regionBox.FormattingEnabled = true;
+            this.regionBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.regionBox.Items.AddRange(new object[] {
             "NA",
-            "BR1",
-            "EUNI",
-            "EUWI",
-            "JPI",
+            "BR",
+            "EUNE",
+            "EUW",
+            "JP",
             "KR",
-            "LA1",
-            "LA2",
-            "OC1",
-            "RT1",
+            "OCE",
+            "TR",
             "RU"});
-            this.comboBox3.Location = new System.Drawing.Point(6, 97);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 5;
+            this.regionBox.Location = new System.Drawing.Point(6, 208);
+            this.regionBox.Name = "regionBox";
+            this.regionBox.Size = new System.Drawing.Size(121, 21);
+            this.regionBox.TabIndex = 5;
+            this.regionBox.Text = "NA";
+            this.regionBox.SelectedIndexChanged += new System.EventHandler(this.regionBox_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 81);
+            this.label3.Location = new System.Drawing.Point(3, 192);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 13);
             this.label3.TabIndex = 4;
@@ -189,7 +236,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox5);
-            this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.topChampsBox);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Location = new System.Drawing.Point(190, 25);
             this.groupBox2.Name = "groupBox2";
@@ -283,77 +330,77 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "Most Common Lane";
             // 
-            // groupBox4
+            // topChampsBox
             // 
-            this.groupBox4.Controls.Add(this.textBox10);
-            this.groupBox4.Controls.Add(this.textBox9);
-            this.groupBox4.Controls.Add(this.textBox8);
-            this.groupBox4.Controls.Add(this.textBox7);
-            this.groupBox4.Controls.Add(this.textBox6);
-            this.groupBox4.Controls.Add(this.textBox5);
-            this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Controls.Add(this.textBox4);
-            this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.textBox3);
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.textBox2);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.textBox1);
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Location = new System.Drawing.Point(227, 18);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(188, 382);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Top Champs by Role";
+            this.topChampsBox.Controls.Add(this.topChamp2);
+            this.topChampsBox.Controls.Add(this.jungleChamp2);
+            this.topChampsBox.Controls.Add(this.midChamp2);
+            this.topChampsBox.Controls.Add(this.supportChamp2);
+            this.topChampsBox.Controls.Add(this.carryChamp2);
+            this.topChampsBox.Controls.Add(this.carryChamp1);
+            this.topChampsBox.Controls.Add(this.label8);
+            this.topChampsBox.Controls.Add(this.supportChamp1);
+            this.topChampsBox.Controls.Add(this.label7);
+            this.topChampsBox.Controls.Add(this.midChamp1);
+            this.topChampsBox.Controls.Add(this.label6);
+            this.topChampsBox.Controls.Add(this.jungleChamp1);
+            this.topChampsBox.Controls.Add(this.label5);
+            this.topChampsBox.Controls.Add(this.topChamp1);
+            this.topChampsBox.Controls.Add(this.label4);
+            this.topChampsBox.Location = new System.Drawing.Point(227, 18);
+            this.topChampsBox.Name = "topChampsBox";
+            this.topChampsBox.Size = new System.Drawing.Size(188, 382);
+            this.topChampsBox.TabIndex = 1;
+            this.topChampsBox.TabStop = false;
+            this.topChampsBox.Text = "Top Champs by Role";
             // 
-            // textBox10
+            // topChamp2
             // 
-            this.textBox10.Location = new System.Drawing.Point(6, 59);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.ReadOnly = true;
-            this.textBox10.Size = new System.Drawing.Size(175, 20);
-            this.textBox10.TabIndex = 15;
+            this.topChamp2.Location = new System.Drawing.Point(6, 59);
+            this.topChamp2.Name = "topChamp2";
+            this.topChamp2.ReadOnly = true;
+            this.topChamp2.Size = new System.Drawing.Size(175, 20);
+            this.topChamp2.TabIndex = 15;
             // 
-            // textBox9
+            // jungleChamp2
             // 
-            this.textBox9.Location = new System.Drawing.Point(7, 130);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(175, 20);
-            this.textBox9.TabIndex = 14;
+            this.jungleChamp2.Location = new System.Drawing.Point(7, 130);
+            this.jungleChamp2.Name = "jungleChamp2";
+            this.jungleChamp2.ReadOnly = true;
+            this.jungleChamp2.Size = new System.Drawing.Size(175, 20);
+            this.jungleChamp2.TabIndex = 14;
             // 
-            // textBox8
+            // midChamp2
             // 
-            this.textBox8.Location = new System.Drawing.Point(6, 199);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(175, 20);
-            this.textBox8.TabIndex = 13;
+            this.midChamp2.Location = new System.Drawing.Point(6, 199);
+            this.midChamp2.Name = "midChamp2";
+            this.midChamp2.ReadOnly = true;
+            this.midChamp2.Size = new System.Drawing.Size(175, 20);
+            this.midChamp2.TabIndex = 13;
             // 
-            // textBox7
+            // supportChamp2
             // 
-            this.textBox7.Location = new System.Drawing.Point(6, 276);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(175, 20);
-            this.textBox7.TabIndex = 12;
+            this.supportChamp2.Location = new System.Drawing.Point(6, 276);
+            this.supportChamp2.Name = "supportChamp2";
+            this.supportChamp2.ReadOnly = true;
+            this.supportChamp2.Size = new System.Drawing.Size(175, 20);
+            this.supportChamp2.TabIndex = 12;
             // 
-            // textBox6
+            // carryChamp2
             // 
-            this.textBox6.Location = new System.Drawing.Point(6, 353);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.ReadOnly = true;
-            this.textBox6.Size = new System.Drawing.Size(175, 20);
-            this.textBox6.TabIndex = 11;
+            this.carryChamp2.Location = new System.Drawing.Point(6, 353);
+            this.carryChamp2.Name = "carryChamp2";
+            this.carryChamp2.ReadOnly = true;
+            this.carryChamp2.Size = new System.Drawing.Size(175, 20);
+            this.carryChamp2.TabIndex = 11;
             // 
-            // textBox5
+            // carryChamp1
             // 
-            this.textBox5.Location = new System.Drawing.Point(6, 327);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(175, 20);
-            this.textBox5.TabIndex = 10;
+            this.carryChamp1.Location = new System.Drawing.Point(6, 327);
+            this.carryChamp1.Name = "carryChamp1";
+            this.carryChamp1.ReadOnly = true;
+            this.carryChamp1.Size = new System.Drawing.Size(175, 20);
+            this.carryChamp1.TabIndex = 10;
             // 
             // label8
             // 
@@ -364,13 +411,13 @@
             this.label8.TabIndex = 9;
             this.label8.Text = "ADC";
             // 
-            // textBox4
+            // supportChamp1
             // 
-            this.textBox4.Location = new System.Drawing.Point(7, 250);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(175, 20);
-            this.textBox4.TabIndex = 8;
+            this.supportChamp1.Location = new System.Drawing.Point(7, 250);
+            this.supportChamp1.Name = "supportChamp1";
+            this.supportChamp1.ReadOnly = true;
+            this.supportChamp1.Size = new System.Drawing.Size(175, 20);
+            this.supportChamp1.TabIndex = 8;
             // 
             // label7
             // 
@@ -381,13 +428,13 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "Support";
             // 
-            // textBox3
+            // midChamp1
             // 
-            this.textBox3.Location = new System.Drawing.Point(6, 173);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(175, 20);
-            this.textBox3.TabIndex = 6;
+            this.midChamp1.Location = new System.Drawing.Point(6, 173);
+            this.midChamp1.Name = "midChamp1";
+            this.midChamp1.ReadOnly = true;
+            this.midChamp1.Size = new System.Drawing.Size(175, 20);
+            this.midChamp1.TabIndex = 6;
             // 
             // label6
             // 
@@ -398,13 +445,13 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Mid";
             // 
-            // textBox2
+            // jungleChamp1
             // 
-            this.textBox2.Location = new System.Drawing.Point(7, 104);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(175, 20);
-            this.textBox2.TabIndex = 4;
+            this.jungleChamp1.Location = new System.Drawing.Point(7, 104);
+            this.jungleChamp1.Name = "jungleChamp1";
+            this.jungleChamp1.ReadOnly = true;
+            this.jungleChamp1.Size = new System.Drawing.Size(175, 20);
+            this.jungleChamp1.TabIndex = 4;
             // 
             // label5
             // 
@@ -415,13 +462,13 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Jungle";
             // 
-            // textBox1
+            // topChamp1
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(175, 20);
-            this.textBox1.TabIndex = 2;
+            this.topChamp1.Location = new System.Drawing.Point(7, 33);
+            this.topChamp1.Name = "topChamp1";
+            this.topChamp1.ReadOnly = true;
+            this.topChamp1.Size = new System.Drawing.Size(175, 20);
+            this.topChamp1.TabIndex = 2;
             // 
             // label4
             // 
@@ -434,7 +481,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.Top10Summoners);
+            this.groupBox3.Controls.Add(this.top10Summoners);
             this.groupBox3.Location = new System.Drawing.Point(7, 18);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(198, 382);
@@ -442,22 +489,24 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Top 10 Summoners";
             // 
-            // Top10Summoners
+            // top10Summoners
             // 
-            this.Top10Summoners.FormattingEnabled = true;
-            this.Top10Summoners.Location = new System.Drawing.Point(6, 16);
-            this.Top10Summoners.Name = "Top10Summoners";
-            this.Top10Summoners.Size = new System.Drawing.Size(186, 355);
-            this.Top10Summoners.TabIndex = 0;
+            this.top10Summoners.FormattingEnabled = true;
+            this.top10Summoners.Location = new System.Drawing.Point(6, 16);
+            this.top10Summoners.Name = "top10Summoners";
+            this.top10Summoners.Size = new System.Drawing.Size(186, 355);
+            this.top10Summoners.TabIndex = 0;
             // 
-            // button1
+            // searchButton
             // 
-            this.button1.Location = new System.Drawing.Point(19, 334);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 32);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
+            this.searchButton.Enabled = false;
+            this.searchButton.Location = new System.Drawing.Point(19, 334);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(132, 32);
+            this.searchButton.TabIndex = 6;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // button2
             // 
@@ -492,67 +541,23 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.printToolStripMenuItem.Text = "Print";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 436);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 30);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(102, 17);
-            this.radioButton1.TabIndex = 6;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Stats by League";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(6, 58);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(116, 17);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.Text = "Stats by Summoner";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 241);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(88, 13);
-            this.label13.TabIndex = 8;
-            this.label13.Text = "Summoner Name";
-            // 
-            // textBox15
-            // 
-            this.textBox15.Enabled = false;
-            this.textBox15.Location = new System.Drawing.Point(6, 258);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(121, 20);
-            this.textBox15.TabIndex = 9;
             // 
             // aPIKeyToolStripMenuItem
             // 
@@ -565,33 +570,57 @@
             // enterKeyHereToolStripMenuItem
             // 
             this.enterKeyHereToolStripMenuItem.Name = "enterKeyHereToolStripMenuItem";
-            this.enterKeyHereToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.enterKeyHereToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.enterKeyHereToolStripMenuItem.Text = "Enter Key Here";
             // 
-            // Form1
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar1,
+            this.progressBarStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 436);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            // 
+            // progressBarStatusLabel1
+            // 
+            this.progressBarStatusLabel1.Name = "progressBarStatusLabel1";
+            this.progressBarStatusLabel1.Size = new System.Drawing.Size(135, 17);
+            this.progressBarStatusLabel1.Text = "progressBarStatusLabel1";
+            // 
+            // LoLStatsMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 458);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.searchButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "LoLStatsMain";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.topChampsBox.ResumeLayout(false);
+            this.topChampsBox.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -601,10 +630,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox leagueBox;
+        private System.Windows.Forms.ComboBox divisionBox;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox regionBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -616,25 +645,25 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox11;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.GroupBox topChampsBox;
+        private System.Windows.Forms.TextBox topChamp2;
+        private System.Windows.Forms.TextBox jungleChamp2;
+        private System.Windows.Forms.TextBox midChamp2;
+        private System.Windows.Forms.TextBox supportChamp2;
+        private System.Windows.Forms.TextBox carryChamp2;
+        private System.Windows.Forms.TextBox carryChamp1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox supportChamp1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox midChamp1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox jungleChamp1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox topChamp1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox Top10Summoners;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListBox top10Summoners;
+        private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -642,12 +671,14 @@
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox summonerNameBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton statsBySummonerButton;
+        private System.Windows.Forms.RadioButton statsByLeagueButton;
         private System.Windows.Forms.ToolStripMenuItem aPIKeyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enterKeyHereToolStripMenuItem;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripStatusLabel progressBarStatusLabel1;
     }
 }
 
