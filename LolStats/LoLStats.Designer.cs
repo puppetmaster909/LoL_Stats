@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.leagueBox = new System.Windows.Forms.ComboBox();
@@ -72,13 +73,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aPIKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enterKeyHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.progressBarStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.APIKeyBox = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label14 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -125,6 +127,7 @@
             this.leagueBox.Size = new System.Drawing.Size(121, 21);
             this.leagueBox.TabIndex = 2;
             this.leagueBox.Text = "Challenger";
+            this.leagueBox.SelectedIndexChanged += new System.EventHandler(this.leagueBox_SelectedIndexChanged);
             // 
             // divisionBox
             // 
@@ -140,6 +143,7 @@
             this.divisionBox.Size = new System.Drawing.Size(121, 21);
             this.divisionBox.TabIndex = 3;
             this.divisionBox.Text = "I";
+            this.divisionBox.SelectedIndexChanged += new System.EventHandler(this.divisionBox_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -167,7 +171,6 @@
             this.summonerNameBox.Name = "summonerNameBox";
             this.summonerNameBox.Size = new System.Drawing.Size(121, 20);
             this.summonerNameBox.TabIndex = 9;
-            this.summonerNameBox.Text = "Puppetmaster909";
             this.summonerNameBox.TextChanged += new System.EventHandler(this.summonerNameBox_TextChanged);
             // 
             // label13
@@ -269,6 +272,7 @@
             this.averageGoldBox.ReadOnly = true;
             this.averageGoldBox.Size = new System.Drawing.Size(145, 20);
             this.averageGoldBox.TabIndex = 23;
+            this.averageGoldBox.Visible = false;
             // 
             // label12
             // 
@@ -278,6 +282,7 @@
             this.label12.Size = new System.Drawing.Size(108, 13);
             this.label12.TabIndex = 22;
             this.label12.Text = "Average Ending Gold";
+            this.label12.Visible = false;
             // 
             // averageCSBox
             // 
@@ -286,6 +291,7 @@
             this.averageCSBox.ReadOnly = true;
             this.averageCSBox.Size = new System.Drawing.Size(145, 20);
             this.averageCSBox.TabIndex = 21;
+            this.averageCSBox.Visible = false;
             // 
             // label11
             // 
@@ -295,6 +301,7 @@
             this.label11.Size = new System.Drawing.Size(64, 13);
             this.label11.TabIndex = 20;
             this.label11.Text = "Average CS";
+            this.label11.Visible = false;
             // 
             // commonRoleBox
             // 
@@ -499,6 +506,7 @@
             // 
             // searchButton
             // 
+            this.searchButton.Enabled = false;
             this.searchButton.Location = new System.Drawing.Point(19, 334);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(132, 32);
@@ -515,12 +523,12 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.aPIKeyToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -531,7 +539,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
-            this.printToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -543,13 +550,7 @@
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            // 
-            // printToolStripMenuItem
-            // 
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.printToolStripMenuItem.Text = "Print";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -557,25 +558,11 @@
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // aPIKeyToolStripMenuItem
-            // 
-            this.aPIKeyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enterKeyHereToolStripMenuItem});
-            this.aPIKeyToolStripMenuItem.Name = "aPIKeyToolStripMenuItem";
-            this.aPIKeyToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.aPIKeyToolStripMenuItem.Text = "API Key";
-            // 
-            // enterKeyHereToolStripMenuItem
-            // 
-            this.enterKeyHereToolStripMenuItem.Name = "enterKeyHereToolStripMenuItem";
-            this.enterKeyHereToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.enterKeyHereToolStripMenuItem.Text = "Enter Key Here";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
             this.progressBarStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 436);
             this.statusStrip1.Name = "statusStrip1";
@@ -583,22 +570,46 @@
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-            // 
             // progressBarStatusLabel1
             // 
             this.progressBarStatusLabel1.Name = "progressBarStatusLabel1";
-            this.progressBarStatusLabel1.Size = new System.Drawing.Size(135, 17);
-            this.progressBarStatusLabel1.Text = "progressBarStatusLabel1";
+            this.progressBarStatusLabel1.Size = new System.Drawing.Size(10, 17);
+            this.progressBarStatusLabel1.Text = " ";
+            // 
+            // APIKeyBox
+            // 
+            this.APIKeyBox.Location = new System.Drawing.Point(536, 436);
+            this.APIKeyBox.Name = "APIKeyBox";
+            this.APIKeyBox.PasswordChar = '*';
+            this.APIKeyBox.Size = new System.Drawing.Size(246, 20);
+            this.APIKeyBox.TabIndex = 10;
+            this.APIKeyBox.TextChanged += new System.EventHandler(this.APIKeyBox_TextChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(479, 440);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 13);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "API Key:";
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
             // 
             // LoLStatsMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 458);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.APIKeyBox);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.searchButton);
@@ -667,17 +678,18 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TextBox summonerNameBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RadioButton statsBySummonerButton;
         private System.Windows.Forms.RadioButton statsByLeagueButton;
-        private System.Windows.Forms.ToolStripMenuItem aPIKeyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enterKeyHereToolStripMenuItem;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel progressBarStatusLabel1;
+        private System.Windows.Forms.TextBox APIKeyBox;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }
 

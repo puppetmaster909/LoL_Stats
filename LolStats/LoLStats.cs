@@ -22,7 +22,7 @@ namespace LolStats
     {
         #region Runtime Values
 
-        private string ApiKey = "RGAPI-8797214a-0b32-4d62-89fd-4701daffedaa";
+        private string ApiKey = "";
         private static readonly Uri SummonerByNameBaseAddress = new Uri("https://na1.api.riotgames.com/lol/summoner/v4/summoners");
 
         private static RiotApi Riot;
@@ -36,8 +36,10 @@ namespace LolStats
         public LoLStatsMain()
         {
             InitializeComponent();
-            Riot = RiotApi.NewInstance(ApiKey);
+            
+            this.Text = "LoL Stats";
 
+            Riot = RiotApi.NewInstance(ApiKey);
             DataList = new List<SummonerData>();
         }
         
@@ -74,7 +76,8 @@ namespace LolStats
             {
                 if (IsValidEntry(regionBox, regionBox.Text)
                     && IsValidEntry(leagueBox, leagueBox.Text)
-                    && IsValidEntry(divisionBox, divisionBox.Text))
+                    && IsValidEntry(divisionBox, divisionBox.Text)
+                    && APIKeyBox.TextLength != 0)
                 {
                     searchButton.Enabled = true;
                 }
@@ -86,10 +89,12 @@ namespace LolStats
             else
             {
                 if (IsValidEntry(regionBox, regionBox.Text)
-                    && summonerNameBox.Text.Length != 0)
+                    && summonerNameBox.Text.Length != 0
+                    && APIKeyBox.TextLength != 0)
                 {
                     searchButton.Enabled = true;
                 }
+                else
                 {
                     searchButton.Enabled = false;
                 }
@@ -111,15 +116,22 @@ namespace LolStats
 
         private void searchButton_Click(object sender, EventArgs e)
         {
+            Riot = RiotApi.NewInstance(ApiKey);
+
             if (StatsByLeague)
             {
                 GetLeagueByDivisionSync(regionBox, divisionBox, leagueBox, top10Summoners);
 
                 Role Top = new Role();
+                Top.RoleName = "Top";
                 Role Jungle = new Role();
+                Jungle.RoleName = "Jungle";
                 Role Mid = new Role();
+                Mid.RoleName = "Mid";
                 Role Support = new Role();
+                Support.RoleName = "Support";
                 Role ADC = new Role();
+                ADC.RoleName = "ADC";
 
                 foreach (SummonerData current in DataList)
                 {
@@ -156,6 +168,113 @@ namespace LolStats
                     // Invalid response from server
                     progressBarStatusLabel1.BackColor = Color.FromName("Crimson");
                     progressBarStatusLabel1.Text = "No Response";
+                }
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void APIKeyBox_TextChanged(object sender, EventArgs e)
+        {
+            if (APIKeyBox.TextLength != 0
+                && IsValidEntry(leagueBox, leagueBox.Text)
+                && IsValidEntry(divisionBox, divisionBox.Text)
+                && IsValidEntry(regionBox, regionBox.Text))
+            {
+                searchButton.Enabled = true;
+            }
+            else if (APIKeyBox.TextLength != 0
+                && IsValidEntry(regionBox, regionBox.Text)
+                && summonerNameBox.TextLength != 0)
+            {
+                searchButton.Enabled = true;
+            }
+            else
+            {
+                searchButton.Enabled = false;
+            }
+
+            ApiKey = APIKeyBox.Text;
+        }
+
+        private void leagueBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void divisionBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (APIKeyBox.TextLength != 0
+            //    && IsValidEntry(leagueBox, leagueBox.Text)
+            //    && IsValidEntry(divisionBox, divisionBox.Text)
+            //    && IsValidEntry(regionBox, regionBox.Text))
+            //{
+            //    searchButton.Enabled = true;
+            //}
+            //else if (APIKeyBox.TextLength != 0
+            //    && IsValidEntry(regionBox, regionBox.Text)
+            //    && summonerNameBox.TextLength != 0)
+            //{
+            //    searchButton.Enabled = true;
+            //}
+            //else
+            //{
+            //    searchButton.Enabled = false;
+            //}
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            DataList.Clear();
+            top10Summoners.Items.Clear();
+
+            progressBarStatusLabel1.BackColor = Color.FromName("Control");
+            progressBarStatusLabel1.Text = "";
+
+            topChamp1.Clear();
+            topChamp2.Clear();
+
+            jungleChamp1.Clear();
+            jungleChamp2.Clear();
+
+            midChamp1.Clear();
+            midChamp2.Clear();
+
+            supportChamp1.Clear();
+            supportChamp2.Clear();
+
+            carryChamp1.Clear();
+            carryChamp2.Clear();
+
+            commonLaneBox.Clear();
+            commonRoleBox.Clear();
+
+            averageCSBox.Clear();
+            averageGoldBox.Clear();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //JsonSerializer serializer = new JsonSerializer();
+            //string output = JsonConvert.SerializeObject(DataList);
+
+            saveFileDialog1.FileName = "LolStats.json";
+            saveFileDialog1.Filter = "|*.json";
+
+            if (saveFileDialog1.FileName != "" && saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                JsonSerializer serializer = new JsonSerializer
+                {
+                    Formatting = Formatting.Indented
+                };
+
+                using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(saveFileDialog1.FileName))
+                using (JsonWriter jsonWriter = new JsonTextWriter(streamWriter))
+                {
+                    serializer.Serialize(jsonWriter, DataList);
                 }
             }
 
@@ -208,24 +327,24 @@ namespace LolStats
 
         private static void FindTopChamps(Role input)
         {
-            int topChamp = 0;
+            Champion topChamp = 0;
             int topChampCount = 0;
-            int secondChamp = 0;
+            Champion secondChamp = 0;
             int secondChampCount = 0;
 
-            foreach (int i in input.ChampionMap.Keys)
+            foreach (Champion c in input.ChampionMap.Keys)
             {
-                if (input.ChampionMap[i] >= secondChampCount)
+                if (input.ChampionMap[c] >= secondChampCount)
                 {
-                    secondChamp = i;
-                    secondChampCount = input.ChampionMap[i];
+                    secondChamp = c;
+                    secondChampCount = input.ChampionMap[c];
                 }
-                if (input.ChampionMap[i] >= topChampCount)
+                if (input.ChampionMap[c] >= topChampCount)
                 {
                     secondChamp = topChamp;
                     secondChampCount = topChampCount;
-                    topChamp = i;
-                    topChampCount = input.ChampionMap[i];
+                    topChamp = c;
+                    topChampCount = input.ChampionMap[c];
 
                 }
             }
@@ -235,13 +354,6 @@ namespace LolStats
 
             //return input;
         }
-
-        //private static async Task GetSummonerAsync(ComboBox region, string summonerName)
-        //{
-        //    await Riot.SummonerV4.GetBySummonerName(Utility.GetRegion(region.Text), summonerName);
-        //}
-
-        // Gets summoner by name and adds their data to DataList
 
         private static void GetSummonerSync(ComboBox region, string name)
         {
@@ -430,7 +542,7 @@ namespace LolStats
         {
             group.MatchCount += current.MatchCount;
 
-            foreach (int i in current.ChampionMap.Keys)
+            foreach (Champion i in current.ChampionMap.Keys)
             {
                 if (group.ChampionMap.ContainsKey(i))
                 {
@@ -601,7 +713,7 @@ namespace LolStats
 
         private static void GetLeagueByDivisionSync(ComboBox region, ComboBox division, ComboBox league, ListBox list)
         {
-            var leagueEntries = Riot.LeagueExpV4.GetLeagueEntries(Utility.GetRegion(region.Text), Utility.GetDivision(division.Text).ToString(), Utility.GetTier(league.Text), Queue.RANKED_SOLO_5x5);
+            var leagueEntries = Riot.LeagueExpV4.GetLeagueEntries(Utility.GetRegion(region.Text), QueueType.RANKED_SOLO_5x5, Utility.GetTier(league.Text), Utility.GetDivision(division.Text));
 
             for (int i = 0; i < 10; i++)
             {
@@ -617,8 +729,6 @@ namespace LolStats
 
                 DataList.Add(current);
             }
-
-
         }
     }
 }

@@ -10,6 +10,7 @@ namespace LolStats
     [Serializable]
     public class SummonerData
     {
+        [JsonProperty("Name")]
         public string Name;
         //public long AverageCS;
         //public long AverageGold;

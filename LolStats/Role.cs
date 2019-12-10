@@ -4,20 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MingweiSamuel.Camille;
+using MingweiSamuel.Camille.MatchV4;
+using MingweiSamuel.Camille.Enums;
+using Newtonsoft.Json;
 
 namespace LolStats
 {
     [Serializable]
     public class Role
     {
+        [JsonProperty("RoleName")]
         public string RoleName;
+        [JsonProperty("MatchCount")]
         public int MatchCount;
 
-        public int TopChamp;
-        public int SecondChamp;
+        [JsonIgnore]
+        public Champion TopChamp;
+        [JsonIgnore]
+        public Champion SecondChamp;
 
-        // Champion id - number of times played
-        public Dictionary<int, int> ChampionMap;
+        public Dictionary<Champion, int> ChampionMap;
 
         public Role()
         {
@@ -27,7 +33,7 @@ namespace LolStats
             TopChamp = 0;
             SecondChamp = 0;
 
-            ChampionMap = new Dictionary<int, int>();
+            ChampionMap = new Dictionary<Champion, int>();
         }
     }
 }
